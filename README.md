@@ -14,7 +14,7 @@ The reason for using continuous values ​​is to suppress repeated lane change
 Furthermore, I adopted the following for realizing smooth acceleration and suppressing ncident.
 1. Acceleration controller according to speed and other vehicle.(main.cpp, line 186)
 2. Lane change interval (suppresses continuous lane change).(trajetory.cpp, line 146-147)
-3. Use the number of lane change judgment as reliability(trajetory.cpp, line 114-116)
+3. The number of times of lane change determination was used as reliability(trajetory.cpp, line 114-116)
 
 ### Future work
 In this project, we used cost according to distance. However, by using acceleration and speed, we believe that it will be possible to change lanes more smoothly.
