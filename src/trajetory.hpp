@@ -198,9 +198,9 @@ double CalcAcceleration(bool too_close, int lane, int best_lane, double ref_vel,
       accVal = tmp_a;
 
     }
-    else{
-      accVal = -BASE_ACCEL_VAL;
-    }
+//    else{
+//      accVal = -BASE_ACCEL_VAL;
+//    }
   }
 
   if(isLaneChange == true)
