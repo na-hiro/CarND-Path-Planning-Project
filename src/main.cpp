@@ -66,9 +66,10 @@ int main() {
   // have a reference velocity to target
   double ref_vel = 0; // mph
   int lane_ch_cnt = 0;
+  double max_vel = 49.5; // max speed(mph)
 
   h.onMessage(
-      [&lane_ch_cnt, &isLaneChange, &frame, &lane, &ref_vel, &map_waypoints_x,&map_waypoints_y,&map_waypoints_s,&map_waypoints_dx,&map_waypoints_dy]
+      [&max_vel, &lane_ch_cnt, &isLaneChange, &frame, &lane, &ref_vel, &map_waypoints_x,&map_waypoints_y,&map_waypoints_s,&map_waypoints_dx,&map_waypoints_dy]
        (uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length,
           uWS::OpCode opCode) {
         // "42" at the start of the message means there's a websocket message event.
@@ -77,8 +78,8 @@ int main() {
         //auto sdata = string(data).substr(0, length);
         //cout << sdata << endl;
 
-
-        double max_vel = 49.5; // max speed(mph)
+//        double max_vel = 49.5; // max speed(mph)
+        double target_vel;
         if (length && length > 2 && data[0] == '4' && data[1] == '2') {
 
           auto s = hasData(data);
@@ -166,12 +167,15 @@ int main() {
 
               // calc_target_speed
               double sp_coeff = CalcSpeedCoeff(viecle_sum);
-              max_vel *= sp_coeff;
-              if(max_vel < closest_speed)
-                closest_speed = max_vel;
+              target_vel = max_vel * sp_coeff;
+//              max_vel *= 1;//sp_coeff;
+//              if(max_vel < closest_speed)
+              if(target_vel < closest_speed)
+                closest_speed = target_vel;
 
               printf("SPEED INFO.:\n");
-              printf("Detected CarNum. Target Speed: %d %.1f[MPH]\n", viecle_sum, max_vel);
+              printf("Detected CarNum. Target Speed: %d %.1f[MPH]\n", viecle_sum, target_vel);
+//              printf("Detected CarNum. Target Speed: %d %.1f[MPH]\n", viecle_sum, max_vel);
 
 
               double cost_array[3] = { 0 };
@@ -183,7 +187,8 @@ int main() {
               JudgementBestLane(&lane, &best_lane, &isLaneChange, &lane_ch_cnt, &frame, ref_vel, cost_array);
 
               // speed_controller
-              double accVal = CalcAcceleration(too_close, lane, best_lane, ref_vel, max_vel, closest_speed, ego_dist, isLaneChange);
+              double accVal = CalcAcceleration(too_close, lane, best_lane, ref_vel, target_vel, closest_speed, ego_dist, isLaneChange);
+//              double accVal = CalcAcceleration(too_close, lane, best_lane, ref_vel, max_vel, closest_speed, ego_dist, isLaneChange);
               ref_vel += accVal;
               printf("\n");
 
