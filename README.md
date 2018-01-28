@@ -1,5 +1,11 @@
+[//]: # (Image References)
+
+[image1]: path_planning.gif "path_planning_gif"
+
 # CarND-Path-Planning-Project
 Self-Driving Car Engineer Nanodegree Program
+
+![alt text][image1]
 
 ### Path Planning Strategy
 The determination of the lane change is made by the following cost calculation.
@@ -16,11 +22,11 @@ Furthermore, I adopted the following for realizing smooth acceleration and suppr
 2. Lane change interval (suppresses continuous lane change).(trajetory.cpp, line 146-147)
 3. The number of times of lane change determination was used as reliability(trajetory.cpp, line 114-116)
 
-### Provide a link to my final video output.  
-Here's a [link to my project video result](./path_planning_output.mp4)
-
 ### Future work
 In this project, we used cost according to distance. However, by using acceleration and speed, we believe that it will be possible to change lanes more smoothly.
+
+### Provide a link to my final video output.  
+Here's a [link to my project video result](./path_planning_output.mp4)
 
 ### Simulator.
 You can download the Term3 Simulator which contains the Path Planning Project from the [releases tab (https://github.com/udacity/self-driving-car-sim/releases).
